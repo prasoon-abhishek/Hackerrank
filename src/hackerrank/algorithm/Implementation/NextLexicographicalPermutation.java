@@ -3,21 +3,21 @@ package hackerrank.algorithm.Implementation;
 import java.util.Arrays;
 import java.util.Scanner;
 
-public class BiggerIsGreater {
+public class NextLexicographicalPermutation {
 
-	static String biggerIsGreater(String w) {
-		char[] numArray = w.toCharArray();
-		char[] suffix = getSuffix(numArray);
-//		System.out.println("suffix " + new String(suffix));
-		if (suffix.length < w.length()) {
-			int pivotIndex = w.length() - suffix.length - 1;
+	static int[] findNextLexicographPermutation(int[] numArray) {
+
+		int[] suffix = getSuffix(numArray);
+
+		if (suffix.length < numArray.length) {
+			int pivotIndex = numArray.length - suffix.length - 1;
 			int swapIndex = getSwapIndex(suffix, numArray, pivotIndex);
 			// System.out.println(" swapIndex " + swapIndex);
-			char temp = suffix[swapIndex];
+			int temp = suffix[swapIndex];
 			suffix[swapIndex] = numArray[pivotIndex];
 			numArray[pivotIndex] = temp;
 		} else {
-		return	"no answer";
+			System.out.println("no answer");
 		}
 		// System.out.println("length "+(numArray.length-suffix.length));
 		Arrays.sort(suffix);
@@ -26,12 +26,12 @@ public class BiggerIsGreater {
 			numArray[i] = suffix[n++];
 		}
 
-		return new String(numArray);
+		return numArray;
 	}
 
-	public static int getSwapIndex(char[] suffix, char[] numArray, int pivotIndex) {
+	public static int getSwapIndex(int[] suffix, int[] numArray, int pivotIndex) {
 
-		// System.out.println("pivot " + pivotIndex);
+//		System.out.println("pivot " + pivotIndex);
 		int minDifference = suffix[0] - numArray[pivotIndex];
 		int swapIndex = 0;
 		for (int i = 1; i < suffix.length; i++) {
@@ -44,17 +44,17 @@ public class BiggerIsGreater {
 		return swapIndex;
 	}
 
-	public static char[] getSuffix(char[] numArray) {
+	public static int[] getSuffix(int[] numArray) {
 		int count = 1;
 		for (int i = numArray.length - 1; i > 0; i--) {
-			char num = numArray[i];
+			int num = numArray[i];
 			if (num <= numArray[i - 1]) {
 				count++;
 			} else {
 				break;
 			}
 		}
-		char[] suffix = new char[count];
+		int[] suffix = new int[count];
 		int index = numArray.length - count;
 		for (int i = 0; i < count; i++) {
 
@@ -65,14 +65,15 @@ public class BiggerIsGreater {
 
 	public static void main(String[] args) {
 		System.out.println();
-		Scanner in = new Scanner(System.in);
-		int T = in.nextInt();
-		for (int a0 = 0; a0 < T; a0++) {
-			String w = in.next();
-			String result = biggerIsGreater(w);
-			System.out.println(result);
+		Scanner scan = new Scanner(System.in);
+		int n = scan.nextInt();
+		int[] numArray = new int[n];
+		for (int i = 0; i < n; i++) {
+			numArray[i] = scan.nextInt();
 		}
-		in.close();
-	}
 
+		int[] resultArray = findNextLexicographPermutation(numArray);
+		for (int i : resultArray)
+			System.out.print(i + " ");
+	}
 }

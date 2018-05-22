@@ -1,7 +1,6 @@
 package hackerrank.algorithm.sorting;
 
 import java.util.Scanner;
-import java.util.function.BinaryOperator;
 
 public class InsertionSortAdvanced {
 
