@@ -1,30 +1,32 @@
 package hackerrank.algorithm.greedy;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class LargestPermutation {
 
 	static int[] largestPermutation(int k, int[] arr) {
+
 		int n = 0;
-		while (k > 0 && n < arr.length) {
-			int largest = arr[n];
-			int swap = n;
-			for (int i = n; i < arr.length; i++) {
-				if (arr[i] > largest) {
-					largest = arr[i];
-					swap = i;
+
+		for (int i = 0; i < k; i++) {
+			int pivotIndex = n;
+
+			int largest = arr[pivotIndex];
+			int largestIndex = pivotIndex;
+			for (int j = n + 1; j < arr.length; j++) {
+				if (arr[j] > largest) {
+					largest = arr[j];
+					largestIndex = j;
 				}
 			}
-			if (swap != n) {
-				arr[swap] = arr[n];
-				arr[n] = largest;
-
-				// printArray(arr);
-
-				k--;
-
-			}
 			n++;
+			if (largest == arr[pivotIndex])
+				k++;
+			int temp = largest;
+			arr[largestIndex] = arr[pivotIndex];
+			arr[pivotIndex] = largest;
+
 		}
 		return arr;
 	}
